@@ -26,7 +26,7 @@ nav.appendChild(mobileNavButton);
 document.querySelector('footer p').innerHTML = 
     `&copy; ${new Date().getFullYear()} Euhemeria. Todos los derechos reservados.`;
 
-// Gallery logic for random 3-image display
+// Gallery logic for random 3-image display with fade animation
 document.addEventListener('DOMContentLoaded', () => {
     const galleryContainer = document.querySelector('.post-gallery');
     if (!galleryContainer) return;
@@ -35,48 +35,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const allGalleryItemsData = Array.from(galleryContainer.children).map(item => ({
         src: item.querySelector('img').getAttribute('src'),
         alt: item.querySelector('img').getAttribute('alt'),
-        // Caption is removed
     }));
 
-    // Clear existing items from the HTML container to make space for the 3 display slots
+    // Clear existing items from the HTML container and create 3 fixed slots
     galleryContainer.innerHTML = '';
-
-    // Create 3 fixed slots in the HTML container
     for (let i = 0; i < 3; i++) {
         const newItem = document.createElement('div');
-        newItem.classList.add('gallery-item', 'active-display'); // Add 'active-display' class for styling
-        newItem.innerHTML = `
-            <img src="" alt="" />
-        `; // Removed caption div
+        newItem.classList.add('gallery-item', 'active-display');
+        newItem.innerHTML = `<img src="" alt="" />`;
         galleryContainer.appendChild(newItem);
     }
 
     const displayItems = galleryContainer.querySelectorAll('.gallery-item.active-display');
 
-    // Function to select and display 3 random unique items
+    // Function to select and display 3 random unique items with fade animation
     const selectAndDisplayRandomPosts = () => {
         // Shuffle the data array
         const shuffledData = [...allGalleryItemsData].sort(() => 0.5 - Math.random());
-
         // Select the first 3 unique items
         const selectedItems = shuffledData.slice(0, 3);
 
-        // Update the display slots with selected items
-        displayItems.forEach((displayItem, index) => {
-            if (selectedItems[index]) {
-                displayItem.querySelector('img').setAttribute('src', selectedItems[index].src);
-                displayItem.querySelector('img').setAttribute('alt', selectedItems[index].alt);
-                // Caption update is removed
-                displayItem.style.display = 'flex'; // Make sure it's visible
-            } else {
-                 displayItem.style.display = 'none'; // Hide if less than 3 items
-            }
+        // Apply fade-out animation
+        displayItems.forEach(item => {
+            const img = item.querySelector('img');
+            img.classList.remove('fade-in');
+            img.classList.add('fade-out');
         });
+
+        // Wait for fade-out to complete, then update content and fade in
+        setTimeout(() => {
+            displayItems.forEach((displayItem, index) => {
+                const img = displayItem.querySelector('img');
+                if (selectedItems[index]) {
+                    img.setAttribute('src', selectedItems[index].src);
+                    img.setAttribute('alt', selectedItems[index].alt);
+                    // Remove fade-out and add fade-in
+                    img.classList.remove('fade-out');
+                    img.classList.add('fade-in');
+                    displayItem.style.display = 'flex'; // Ensure display is correct
+                } else {
+                    displayItem.style.display = 'none'; // Hide if less than 3 items
+                }
+            });
+        }, 500); // Matches fade-out animation duration (0.5s)
     };
 
     // Initial display
     selectAndDisplayRandomPosts();
 
-    // Change items every 3 seconds
-    setInterval(selectAndDisplayRandomPosts, 3000);
+    // Change items every 5 seconds (including the fade time)
+    setInterval(selectAndDisplayRandomPosts, 5000);
 }); 
