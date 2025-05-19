@@ -226,15 +226,37 @@ footer {
   border-radius: 6px;
   overflow: hidden;
   box-shadow: var(--shadow);
-  flex-direction: column;
-  align-items: center;
+  position: relative;
+  padding-top: 100%;
 }
 
 .gallery-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   object-fit: cover;
-  border-bottom: 2px solid var(--orange);
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Animation keyframes */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.gallery-item.fade-out img {
+  animation: fadeOut 0.5s forwards;
+}
+
+.gallery-item.fade-in img {
+  animation: fadeIn 0.5s forwards;
 }
 
 /* Responsive design */
@@ -272,7 +294,6 @@ footer {
     gap: 1rem;
   }
   .gallery-item img {
-    aspect-ratio: 1 / 1;
   }
 }
 
