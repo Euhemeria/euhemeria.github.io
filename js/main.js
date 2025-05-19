@@ -26,36 +26,24 @@ nav.appendChild(mobileNavButton);
 document.querySelector('footer p').innerHTML = 
     `&copy; ${new Date().getFullYear()} Euhemeria. Todos los derechos reservados.`;
 
-// Slideshow for Últimas Publicaciones
-let slideIndex = 0;
-const showSlides = () => {
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    slides.forEach(slide => slide.style.display = 'none');
-    dots.forEach(dot => dot.classList.remove('active'));
-    slideIndex++;
-    if (slideIndex > slides.length) { slideIndex = 1; }
-    if (slides[slideIndex - 1]) {
-        slides[slideIndex - 1].style.display = 'block';
-        dots[slideIndex - 1].classList.add('active');
+// Function to shuffle an array (Fisher-Yates algorithm)
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
     }
-    setTimeout(showSlides, 4000); // Change image every 4 seconds
+    return array;
 };
 
+// Randomize gallery items on page load
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.querySelectorAll('.slide').length > 0) {
-        showSlides();
+    const galleryContainer = document.querySelector('.post-gallery');
+    if (galleryContainer) {
+        const galleryItems = Array.from(galleryContainer.children);
+        const shuffledItems = shuffleArray(galleryItems);
+
+        // Clear the current gallery and append shuffled items
+        galleryContainer.innerHTML = '';
+        shuffledItems.forEach(item => galleryContainer.appendChild(item));
     }
-    // Dots click event
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, idx) => {
-        dot.addEventListener('click', () => {
-            slideIndex = idx;
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach(slide => slide.style.display = 'none');
-            dots.forEach(dot => dot.classList.remove('active'));
-            slides[slideIndex].style.display = 'block';
-            dots[slideIndex].classList.add('active');
-        });
-    });
 }); 
