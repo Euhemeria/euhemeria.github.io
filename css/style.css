@@ -2,12 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Poppins:wght@400;700&display=swap');
 
 :root {
-  --dark-navy: #181c2f;
-  --section-bg: #22243a;
+  --black: #111111;
+  --section-bg: #181818;
   --orange: #ff9800;
-  --yellow: #ffe066;
-  --accent-blue: #3a6ea5;
-  --offwhite: #fffbe7;
+  --yellow-orange: #ffc94b;
+  --blue-detail: #3a6ea5;
+  --white: #ffffff;
   --shadow: 0 2px 8px #ff980033;
 }
 
@@ -19,13 +19,13 @@
 
 body {
   font-family: 'Poppins', 'Baloo 2', Arial, sans-serif;
-  background: var(--dark-navy);
-  color: var(--offwhite);
+  background: var(--black);
+  color: var(--white);
   min-height: 100vh;
 }
 
 header {
-  background: var(--dark-navy);
+  background: var(--black);
   border-bottom: 2.5px solid var(--orange);
   position: fixed;
   width: 100%;
@@ -49,7 +49,7 @@ nav {
   color: var(--orange);
   font-weight: bold;
   letter-spacing: 2px;
-  text-shadow: 1px 1px 0 var(--yellow), 0 2px 8px #ff980044;
+  text-shadow: 1px 1px 0 var(--yellow-orange), 0 2px 8px #ff980044;
 }
 
 .nav-links {
@@ -63,7 +63,7 @@ nav {
 
 .nav-links a {
   text-decoration: none;
-  color: var(--yellow);
+  color: var(--white);
   font-weight: 700;
   font-size: 1.1rem;
   padding: 0.5rem 1.2rem;
@@ -74,13 +74,13 @@ nav {
 
 .nav-links a:hover {
   background: var(--orange);
-  color: var(--dark-navy);
-  border: 2px solid var(--yellow);
+  color: var(--black);
+  border: 2px solid var(--yellow-orange);
 }
 
 .mobile-nav-toggle {
   background: var(--orange);
-  color: var(--dark-navy);
+  color: var(--black);
   border: none;
   border-radius: 4px;
   font-size: 1.5rem;
@@ -106,7 +106,7 @@ section {
 
 .hero {
   background: var(--section-bg);
-  border: 2.5px solid var(--yellow);
+  border: 2.5px solid var(--yellow-orange);
   text-align: center;
   box-shadow: 0 4px 24px #ff980044;
   margin-bottom: 2.5rem;
@@ -119,12 +119,12 @@ section {
   font-weight: 700;
   margin-bottom: 1.2rem;
   letter-spacing: 1px;
-  text-shadow: 2px 2px 0 var(--yellow), 0 2px 8px #ff980044;
+  text-shadow: 2px 2px 0 var(--yellow-orange), 0 2px 8px #ff980044;
 }
 
 .hero p {
   font-size: 1.3rem;
-  color: var(--yellow);
+  color: var(--yellow-orange);
   margin-bottom: 0;
   font-family: 'Poppins', sans-serif;
 }
@@ -138,21 +138,21 @@ section {
 }
 
 .about {
-  border: 2px solid var(--yellow);
+  border: 2px solid var(--yellow-orange);
 }
 
 .about p {
-  color: var(--offwhite);
+  color: var(--white);
   font-size: 1.1rem;
   margin-top: 0.7rem;
 }
 
 .content {
-  border: 2px solid var(--accent-blue);
+  border: 2px solid var(--blue-detail);
 }
 
 .content h2 {
-  color: var(--accent-blue);
+  color: var(--blue-detail);
 }
 
 .contact {
@@ -168,9 +168,9 @@ section {
 }
 
 .social-link {
-  color: var(--yellow);
+  color: var(--yellow-orange);
   font-size: 2.2rem;
-  background: var(--dark-navy);
+  background: var(--black);
   border-radius: 4px;
   padding: 0.7rem 0.9rem;
   box-shadow: 0 2px 8px #ff980044;
@@ -183,14 +183,14 @@ section {
 
 .social-link:hover {
   background: var(--orange);
-  color: var(--dark-navy);
+  color: var(--black);
   transform: scale(1.12) rotate(-4deg);
-  border: 2px solid var(--yellow);
+  border: 2px solid var(--yellow-orange);
 }
 
 footer {
-  background: var(--dark-navy);
-  color: var(--yellow);
+  background: var(--black);
+  color: var(--yellow-orange);
   text-align: center;
   padding: 1.2rem;
   font-size: 1.1rem;
