@@ -234,14 +234,12 @@ footer {
   cursor: pointer;
   background: var(--black);
   border: 2px solid var(--orange);
-  z-index: 1;
 }
 
 .gallery-item:hover {
   transform: translateY(-15px) scale(1.05);
   box-shadow: 0 12px 24px rgba(255, 152, 0, 0.3);
   z-index: 2;
-  background: var(--orange);
 }
 
 .gallery-item img {
@@ -251,56 +249,16 @@ footer {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: block;
   border-radius: 10px;
-  pointer-events: none; /* Ensure clicks go through to the link */
 }
 
 .gallery-item:hover img {
   transform: scale(1.2);
 }
 
-/* Add Instagram icon overlay on hover */
+/* Remove all pseudo-elements and overlays */
+.gallery-item::before,
 .gallery-item::after {
-  content: '\f16d';  /* Instagram icon */
-  font-family: 'Font Awesome 6 Brands';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  font-size: 2.5rem;
-  color: var(--black);
-  background: var(--orange);
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 3;
-  pointer-events: none; /* Ensure clicks go through to the link */
-}
-
-.gallery-item:hover::after {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-}
-
-/* Add clickable overlay */
-.gallery-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  cursor: pointer;
-}
-
-/* Remove any conflicting styles */
-.post-gallery .gallery-item:not(.active-display) {
-    display: block !important;
+  display: none;
 }
 
 /* Animation keyframes */
