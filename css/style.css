@@ -2,12 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 :root {
-  --text-primary: #1a1a1a;
-  --text-secondary: #4a4a4a;
+  --text-primary: #000000;
+  --text-secondary: #333333;
   --background: #ffffff;
-  --gradient-primary: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
-  --gradient-secondary: linear-gradient(135deg, #e4e8eb 0%, #f5f7fa 100%);
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -24,13 +25,14 @@ body {
 }
 
 header {
-  background: var(--gradient-primary);
+  background: var(--background);
   padding: 1rem 0;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
+  border-bottom: var(--border);
 }
 
 nav {
@@ -58,11 +60,11 @@ nav {
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 600;
-  transition: color 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .nav-links a:hover {
-  color: var(--text-secondary);
+  opacity: 0.7;
 }
 
 main {
@@ -73,12 +75,14 @@ section {
   padding: 4rem 5%;
   max-width: 1200px;
   margin: 0 auto;
+  background: var(--background);
+  border-bottom: var(--border);
 }
 
 .hero {
-  background: var(--gradient-secondary);
   text-align: center;
   padding: 6rem 5%;
+  box-shadow: var(--shadow-md);
 }
 
 .hero h1 {
@@ -121,14 +125,16 @@ section {
   display: block;
   text-decoration: none;
   overflow: hidden;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  transition: transform 0.3s ease;
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   aspect-ratio: 1;
+  border: var(--border);
 }
 
 .gallery-item:hover {
   transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
 }
 
 .gallery-item img {
@@ -139,8 +145,8 @@ section {
 }
 
 .contact {
-  background: var(--gradient-primary);
   text-align: center;
+  box-shadow: var(--shadow-md);
 }
 
 .social-links {
@@ -153,18 +159,20 @@ section {
 .social-link {
   color: var(--text-primary);
   font-size: 1.5rem;
-  transition: color 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .social-link:hover {
-  color: var(--text-secondary);
+  opacity: 0.7;
 }
 
 footer {
-  background: var(--gradient-secondary);
+  background: var(--background);
   text-align: center;
   padding: 2rem;
   color: var(--text-secondary);
+  border-top: var(--border);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Responsive design */
