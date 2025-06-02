@@ -2,13 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 :root {
-  --text-primary: #000000;
-  --text-secondary: #333333;
-  --background: #ffffff;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --border: 1px solid rgba(0, 0, 0, 0.1);
+  --text-light: #ffffff;
+  --text-dark: #cccccc;
+  --bg-dark: #1a1a1a;
+  --bg-sections: rgba(0, 0, 0, 0.8); /* More transparent black */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --border-dark: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 * {
@@ -19,25 +20,32 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--background);
-  color: var(--text-primary);
+  background-color: var(--bg-dark);
+  color: var(--text-light);
   line-height: 1.6;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../img/hero_bg.jpg');
-  background-size: auto 100%;
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
+  min-height: 100vh; /* Ensure body takes at least full viewport height */
+}
+
+.main-content-wrapper {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/hero_bg.jpg'); /* Black overlay and background image */
+    background-size: cover; /* Ensure image covers the wrapper width */
+    background-position: center top; /* Start image at the top center */
+    background-repeat: no-repeat; /* Prevent tiling */
+    background-attachment: scroll; /* Make background scroll with the content */
+    width: 100%;
+    position: relative; /* Needed for z-index context if required later */
+    z-index: 1; /* Ensure it's below header and footer */
 }
 
 header {
-  background: rgba(255, 255, 255, 0.5);
+  background-color: #000000; /* Solid black background */
   padding: 1rem 0;
   box-shadow: var(--shadow-sm);
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 1000;
-  border-bottom: var(--border);
+  z-index: 1000; /* Ensure it's on top */
+  border-bottom: var(--border-dark);
 }
 
 nav {
@@ -52,7 +60,7 @@ nav {
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--text-light);
 }
 
 .nav-links {
@@ -63,90 +71,95 @@ nav {
 
 .nav-links a {
   text-decoration: none;
-  color: var(--text-primary);
+  color: var(--text-light);
   font-weight: 600;
-  transition: opacity 0.3s ease, text-shadow 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block; /* Needed for transform */
 }
 
 .nav-links a:hover {
-  opacity: 0.7;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  opacity: 0.9;
+  transform: translateY(-2px); /* Subtle lift */
 }
 
 main {
-  margin-top: 80px;
+  margin-top: 80px; /* Account for fixed header */
+  position: relative; /* Needed to ensure sections are above background wrapper if z-index is used */
+  z-index: 2; /* Ensure main content is above background wrapper */
 }
 
 section {
-  padding: 4rem 5%;
+  padding: 3rem 5%; /* Reduced padding */
   max-width: 1200px;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.5);
-  border-bottom: var(--border);
+  margin: 2rem auto; /* Add margin for gaps */
+  background-color: var(--bg-sections); /* Semi-transparent black background */
+  border-radius: 8px; /* Optional: add border-radius for better visual separation */
+  box-shadow: var(--shadow-md);
 }
 
 .hero {
   text-align: center;
   padding: 6rem 5%;
   box-shadow: var(--shadow-md);
-  background-image: none;
-}
-
-.hero h1,
-.hero p,
-.about h2,
-.about p,
-.content h2,
-.contact h2,
-.social-link,
-footer p {
-    transition: text-shadow 0.3s ease;
-}
-
-.hero h1:hover,
-.hero p:hover,
-.about h2:hover,
-.about p:hover,
-.content h2:hover,
-.contact h2:hover,
-.social-link:hover,
-footer p:hover {
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-image: none; /* Remove background from hero */
 }
 
 .hero h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--text-primary);
+  color: var(--text-light);
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.hero h1:hover {
+    transform: translateY(-3px);
+    text-shadow: 0 5px 15px rgba(255, 255, 255, 0.5);
 }
 
 .hero p {
   font-size: 1.2rem;
-  color: var(--text-secondary);
+  color: var(--text-dark);
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.hero p:hover {
+    transform: translateY(-2px);
+     text-shadow: 0 3px 10px rgba(255, 255, 255, 0.4);
 }
 
 .about h2, .content h2, .contact h2 {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 2rem;
-  color: var(--text-primary);
+  margin-bottom: 1.5rem; /* Reduced margin */
+  color: var(--text-light);
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.about h2:hover, .content h2:hover, .contact h2:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 3px 10px rgba(255, 255, 255, 0.5);
 }
 
 .about p {
   font-size: 1.1rem;
-  color: var(--text-secondary);
+  color: var(--text-dark);
   max-width: 800px;
   margin: 0 auto;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.about p:hover {
+     transform: translateY(-1px);
+     text-shadow: 0 2px 8px rgba(255, 255, 255, 0.4);
 }
 
 /* Gallery styles */
 .post-gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin: 0 auto;
-  max-width: 1000px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted for better responsiveness */
+  gap: 1.5rem; /* Reduced gap */
+  margin-top: 2rem;
 }
 
 .gallery-item {
@@ -158,12 +171,14 @@ footer p:hover {
   box-shadow: var(--shadow-sm);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   aspect-ratio: 1;
-  border: var(--border);
+  border: var(--border-dark);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for gallery items */
 }
 
 .gallery-item:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.02); /* Subtle lift and scale */
   box-shadow: var(--shadow-lg);
+  background-color: rgba(0, 0, 0, 0.7); /* Slightly less transparent on hover */
 }
 
 .gallery-item img {
@@ -176,7 +191,8 @@ footer p:hover {
 .contact {
   text-align: center;
   box-shadow: var(--shadow-md);
-  background: rgba(255, 255, 255, 0.5);
+  background-color: var(--bg-sections); /* Semi-transparent black background */
+  margin-bottom: 2rem; /* Add margin for gap */
 }
 
 .social-links {
@@ -187,22 +203,34 @@ footer p:hover {
 }
 
 .social-link {
-  color: var(--text-primary);
-  font-size: 1.5rem;
-  transition: opacity 0.3s ease;
+  color: var(--text-light);
+  font-size: 1.8rem; /* Increased size */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block; /* Needed for transform */
 }
 
 .social-link:hover {
-  opacity: 0.7;
+  opacity: 0.9;
+  transform: scale(1.1); /* Subtle scale */
 }
 
 footer {
-  background: rgba(255, 255, 255, 0.5);
+  background-color: #000000; /* Solid black background */
   text-align: center;
-  padding: 2rem;
-  color: var(--text-secondary);
-  border-top: var(--border);
+  padding: 1.5rem; /* Reduced padding */
+  color: var(--text-light);
+  border-top: var(--border-dark);
   box-shadow: var(--shadow-sm);
+  position: relative; /* Needed for z-index */
+  z-index: 1000; /* Ensure it's on top */
+}
+
+footer p {
+    transition: opacity 0.3s ease;
+}
+
+footer p:hover {
+    opacity: 0.9;
 }
 
 /* Responsive design */
@@ -210,14 +238,27 @@ footer {
   .nav-links {
     display: none;
   }
-  
+
   .hero h1 {
     font-size: 2rem;
   }
-  
+
   .post-gallery {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted for smaller screens */
+    gap: 1rem; /* Reduced gap */
+  }
+
+  section {
+    padding: 2rem 5%; /* Reduced padding */
+    margin: 1rem auto; /* Adjusted margin */
+  }
+
+  .hero {
+      padding: 4rem 5%;
+  }
+
+  .social-link {
+      font-size: 1.5rem;
   }
 }
 
@@ -225,8 +266,21 @@ footer {
   .post-gallery {
     grid-template-columns: 1fr;
   }
-  
+
   section {
-    padding: 3rem 5%;
+    padding: 1.5rem 5%; /* Further reduced padding */
+    margin: 0.8rem auto; /* Further adjusted margin */
+  }
+
+  .hero h1 {
+      font-size: 1.8rem;
+  }
+
+  .hero p {
+      font-size: 1rem;
+  }
+
+  .about p {
+      font-size: 1rem;
   }
 } 
