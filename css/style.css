@@ -23,14 +23,14 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../img/hero_bg.jpg');
-  background-size: cover;
-  background-position: center;
+  background-size: auto 100%;
+  background-position: center top;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 header {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.8);
   padding: 1rem 0;
   box-shadow: var(--shadow-sm);
   position: fixed;
@@ -65,11 +65,12 @@ nav {
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 600;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, text-shadow 0.3s ease;
 }
 
 .nav-links a:hover {
   opacity: 0.7;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 main {
@@ -80,7 +81,7 @@ section {
   padding: 4rem 5%;
   max-width: 1200px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.8);
   border-bottom: var(--border);
 }
 
@@ -89,6 +90,28 @@ section {
   padding: 6rem 5%;
   box-shadow: var(--shadow-md);
   background-image: none;
+}
+
+.hero h1,
+.hero p,
+.about h2,
+.about p,
+.content h2,
+.contact h2,
+.social-link,
+footer p {
+    transition: text-shadow 0.3s ease;
+}
+
+.hero h1:hover,
+.hero p:hover,
+.about h2:hover,
+.about p:hover,
+.content h2:hover,
+.contact h2:hover,
+.social-link:hover,
+footer p:hover {
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero h1 {
@@ -153,7 +176,7 @@ section {
 .contact {
   text-align: center;
   box-shadow: var(--shadow-md);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .social-links {
@@ -174,7 +197,7 @@ section {
 }
 
 footer {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: 2rem;
   color: var(--text-secondary);
