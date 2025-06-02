@@ -24,7 +24,7 @@ nav.appendChild(mobileNavButton);
 
 // Update copyright year automatically
 document.querySelector('footer p').innerHTML = 
-    `&copy; ${new Date().getFullYear()} Euhemeria. Todos los derechos reservados.`;
+    `&copy; ${new Date().getFullYear()} Euhemeria. No tenemos derechos xd.`;
 
 // Gallery logic for random 3-image display with fade animation
 document.addEventListener('DOMContentLoaded', () => {
