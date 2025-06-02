@@ -27,7 +27,7 @@ body {
 }
 
 .main-content-wrapper {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../img/hero_bg.jpg'); /* Black overlay and background image */
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('../img/hero_bg.jpg'); /* Black overlay and background image */
     background-size: cover; /* Ensure image covers the wrapper width */
     background-position: center top; /* Start image at the top center */
     background-repeat: no-repeat; /* Prevent tiling */
