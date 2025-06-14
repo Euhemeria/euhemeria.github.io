@@ -2,14 +2,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 :root {
+  /* Brand Colors */
+  --deep-blue: #3d52f1;
+  --soft-blue: #d0eaff;
+  --yellow: #ffb963;
+  --orange: #ff771d;
+  --red: #ff4926;
+  
+  /* Existing variables */
   --text-light: #ffffff;
   --text-dark: #cccccc;
   --bg-dark: #1a1a1a;
-  --bg-sections: rgba(0, 0, 0, 0.8); /* More transparent black */
+  --bg-sections: rgba(0, 0, 0, 0.8);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
   --border-dark: 1px solid rgba(255, 255, 255, 0.2);
+  
+  /* Gradient definitions */
+  --brand-gradient: linear-gradient(135deg, var(--deep-blue), var(--soft-blue), var(--yellow), var(--orange), var(--red));
 }
 
 * {
@@ -27,7 +38,7 @@ body {
 }
 
 .main-content-wrapper {
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('../img/hero_bg.jpg'); /* Black overlay and background image */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../img/hero_bg.jpg'); /* Reduced black overlay opacity */
     background-size: cover; /* Ensure image covers the wrapper width */
     background-position: center top; /* Start image at the top center */
     background-repeat: no-repeat; /* Prevent tiling */
@@ -38,14 +49,18 @@ body {
 }
 
 header {
-  background-color: #000000; /* Solid black background */
+  background-color: #000000;
   padding: 1rem 0;
   box-shadow: var(--shadow-sm);
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 1000; /* Ensure it's on top */
-  border-bottom: var(--border-dark);
+  z-index: 1000;
+  border-bottom: 2px solid transparent;
+  background-image: var(--brand-gradient);
+  background-size: 100% 2px;
+  background-position: bottom;
+  background-repeat: no-repeat;
 }
 
 nav {
@@ -215,14 +230,18 @@ section {
 }
 
 footer {
-  background-color: #000000; /* Solid black background */
+  background-color: #000000;
   text-align: center;
-  padding: 1.5rem; /* Reduced padding */
+  padding: 1.5rem;
   color: var(--text-light);
-  border-top: var(--border-dark);
+  border-top: 2px solid transparent;
+  background-image: var(--brand-gradient);
+  background-size: 100% 2px;
+  background-position: top;
+  background-repeat: no-repeat;
   box-shadow: var(--shadow-sm);
-  position: relative; /* Needed for z-index */
-  z-index: 1000; /* Ensure it's on top */
+  position: relative;
+  z-index: 1000;
 }
 
 footer p {
