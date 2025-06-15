@@ -48,12 +48,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const displayItems = galleryContainer.querySelectorAll('.gallery-item.active-display');
 
+    // Store the last shown items
+    let lastShownItems = [];
+
     // Function to select and display 3 random unique items with fade animation
     const selectAndDisplayRandomPosts = () => {
-        // Shuffle the data array
-        const shuffledData = [...allGalleryItemsData].sort(() => 0.5 - Math.random());
+        // Exclude last shown items from the pool
+        const availableData = allGalleryItemsData.filter(item => !lastShownItems.includes(item.src));
+        // Shuffle the available data array
+        const shuffledData = [...availableData].sort(() => 0.5 - Math.random());
         // Select the first 3 unique items
-        const selectedItems = shuffledData.slice(0, 3);
+        let selectedItems = shuffledData.slice(0, 3);
+
+        // If not enough items, allow previously shown items to fill the rest
+        if (selectedItems.length < 3) {
+            // Get the missing count
+            const missingCount = 3 - selectedItems.length;
+            // Get the rest from lastShownItems (shuffle for randomness)
+            const lastShownData = allGalleryItemsData.filter(item => lastShownItems.includes(item.src)).sort(() => 0.5 - Math.random());
+            selectedItems = selectedItems.concat(lastShownData.slice(0, missingCount));
+        }
 
         // Apply fade-out animation
         displayItems.forEach(item => {
@@ -77,6 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     displayItem.style.display = 'none'; // Hide if less than 3 items
                 }
             });
+            // Update lastShownItems for the next cycle
+            lastShownItems = selectedItems.map(item => item.src);
         }, 500); // Matches fade-out animation duration (0.5s)
     };
 
