@@ -335,16 +335,41 @@ footer p:hover {
   }
 }
 
+@keyframes gradient-wave {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .gradient-link {
-  background: -webkit-linear-gradient(135deg, #3d52f1 0%, #d0eaff 25%, #ffb963 50%, #ff771d 75%, #ff4926 100%);
-  background: linear-gradient(135deg, #3d52f1 0%, #d0eaff 25%, #ffb963 50%, #ff771d 75%, #ff4926 100%);
+  background: linear-gradient(135deg, #3d52f1, #d0eaff, #ffb963, #ff771d, #ff4926, #3d52f1);
+  background-size: 200% 200%;
+  animation: gradient-wave 4s ease-in-out infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
+  filter: drop-shadow(0 0 6px #ffb96388);
   transition: text-shadow 0.3s, filter 0.3s;
 }
-.gradient-link:hover, .gradient-link:focus {
-  filter: brightness(1.2) drop-shadow(0 2px 8px #3d52f1aa);
+
+.nav-links a:hover, .nav-links a:focus {
+  background: linear-gradient(135deg, #3d52f1, #d0eaff, #ffb963, #ff771d, #ff4926, #3d52f1);
+  background-size: 200% 200%;
+  animation: gradient-wave 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 6px #ffb96388);
+  transition: text-shadow 0.3s, filter 0.3s;
   text-decoration: underline;
+}
+
+header::after, footer::before {
+  background: linear-gradient(135deg, #3d52f1, #d0eaff, #ffb963, #ff771d, #ff4926, #3d52f1);
+  background-size: 200% 200%;
+  animation: gradient-wave 6s ease-in-out infinite;
+  filter: blur(0.5px) brightness(1.2);
+  box-shadow: 0 0 8px 2px #ffb96344;
 } 
