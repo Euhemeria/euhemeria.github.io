@@ -459,8 +459,9 @@ header::after, footer::before {
 }
 .menu-cookie-popup img {
   margin-top: 0.5em;
-  width: 32px;
-  height: 32px;
+  width: 90%;
+  max-width: 140px;
+  height: auto;
   object-fit: contain;
   filter: drop-shadow(0 2px 6px #0008);
 } 
