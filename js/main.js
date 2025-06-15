@@ -65,23 +65,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to select and display 3 random unique items with pop-in/pop-out animation
     const selectAndDisplayRandomPosts = () => {
-        // Exclude last shown items and hovered images from the pool
-        const availableData = allGalleryItemsData.filter(item => !lastShownItems.includes(item.src) && !hoveredSrcs.has(item.src));
+        // Get current images in the DOM
+        const currentImages = Array.from(displayItems).map(displayItem => displayItem.querySelector('img').getAttribute('src'));
+        // Exclude all currently displayed images (unless hovered) from the pool
+        const availableData = allGalleryItemsData.filter(item => !currentImages.includes(item.src) && !hoveredSrcs.has(item.src));
         // Shuffle the available data array
         const shuffledData = [...availableData].sort(() => 0.5 - Math.random());
         // Select the first 3 unique items
         let selectedItems = shuffledData.slice(0, 3);
 
-        // If not enough items, allow previously shown items (but still not hovered) to fill the rest
+        // If not enough items, allow currently displayed images (but still not hovered) to fill the rest
         if (selectedItems.length < 3) {
             const missingCount = 3 - selectedItems.length;
-            const lastShownData = allGalleryItemsData.filter(item => lastShownItems.includes(item.src) && !hoveredSrcs.has(item.src)).sort(() => 0.5 - Math.random());
-            selectedItems = selectedItems.concat(lastShownData.slice(0, missingCount));
+            const currentNonHovered = allGalleryItemsData.filter(item => currentImages.includes(item.src) && !hoveredSrcs.has(item.src)).sort(() => 0.5 - Math.random());
+            selectedItems = selectedItems.concat(currentNonHovered.slice(0, missingCount));
         }
 
         // If still not enough (e.g. user is hovering over 2+ images), fill with hovered images in their current slot
         if (selectedItems.length < 3) {
-            const currentImages = Array.from(displayItems).map(displayItem => displayItem.querySelector('img').getAttribute('src'));
             const hoveredFill = currentImages.filter(src => hoveredSrcs.has(src) && !selectedItems.some(item => item && item.src === src));
             selectedItems = selectedItems.concat(hoveredFill.slice(0, 3 - selectedItems.length).map(src => ({src, alt: ''})));
         }
@@ -117,8 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 50); // 0.05s empty
                 }
             });
-            // Update lastShownItems for the next cycle (use current images in DOM)
-            lastShownItems = Array.from(displayItems).map(displayItem => displayItem.querySelector('img').getAttribute('src'));
+            // Update lastShownItems for the next cycle (use current images in DOM, excluding hovered/held images)
+            lastShownItems = Array.from(displayItems)
+                .map(displayItem => displayItem.querySelector('img').getAttribute('src'))
+                .filter(src => !hoveredSrcs.has(src));
         }, 200); // 0.2s pop-out
     };
 
