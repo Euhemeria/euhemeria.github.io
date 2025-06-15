@@ -48,6 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const displayItems = galleryContainer.querySelectorAll('.gallery-item.active-display');
 
+    // Track which images are being hovered
+    const hoveredIndexes = new Set();
+    displayItems.forEach((displayItem, index) => {
+        displayItem.addEventListener('mouseenter', () => hoveredIndexes.add(index));
+        displayItem.addEventListener('mouseleave', () => hoveredIndexes.delete(index));
+    });
+
     // Store the last shown items
     let lastShownItems = [];
 
@@ -70,29 +77,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Apply fade-out animation
-        displayItems.forEach(item => {
-            const img = item.querySelector('img');
-            img.classList.remove('fade-in');
-            img.classList.add('fade-out');
+        displayItems.forEach((item, index) => {
+            // Only animate if not hovered
+            if (!hoveredIndexes.has(index)) {
+                const img = item.querySelector('img');
+                img.classList.remove('fade-in');
+                img.classList.add('fade-out');
+            }
         });
 
         // Wait for fade-out to complete, then update content and fade in
         setTimeout(() => {
             displayItems.forEach((displayItem, index) => {
-                const img = displayItem.querySelector('img');
-                if (selectedItems[index]) {
-                    img.setAttribute('src', selectedItems[index].src);
-                    img.setAttribute('alt', selectedItems[index].alt);
-                    // Remove fade-out and add fade-in
-                    img.classList.remove('fade-out');
-                    img.classList.add('fade-in');
-                    displayItem.style.display = 'flex'; // Ensure display is correct
-                } else {
-                    displayItem.style.display = 'none'; // Hide if less than 3 items
+                // Only update if not hovered
+                if (!hoveredIndexes.has(index)) {
+                    const img = displayItem.querySelector('img');
+                    if (selectedItems[index]) {
+                        img.setAttribute('src', selectedItems[index].src);
+                        img.setAttribute('alt', selectedItems[index].alt);
+                        // Remove fade-out and add fade-in
+                        img.classList.remove('fade-out');
+                        img.classList.add('fade-in');
+                        displayItem.style.display = 'flex'; // Ensure display is correct
+                    } else {
+                        displayItem.style.display = 'none'; // Hide if less than 3 items
+                    }
                 }
             });
-            // Update lastShownItems for the next cycle
-            lastShownItems = selectedItems.map(item => item.src);
+            // Update lastShownItems for the next cycle (use current images in DOM)
+            lastShownItems = Array.from(displayItems).map(displayItem => displayItem.querySelector('img').getAttribute('src'));
         }, 500); // Matches fade-out animation duration (0.5s)
     };
 
