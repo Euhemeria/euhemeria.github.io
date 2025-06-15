@@ -477,18 +477,18 @@ header::after, footer::before {
 }
 
 .definicion-section {
-  background: rgba(61, 82, 241, 0.08);
-  border-left: 4px solid #3d52f1;
+  background: linear-gradient(90deg, #3d52f1 0 6px, rgba(24,28,42,0.93) 0 100%);
+  border-left: 6px solid #3d52f1;
   margin-bottom: 1.2em;
 }
 .sabiasque-section {
-  background: rgba(255, 185, 99, 0.13);
-  border-left: 4px solid #ffb963;
+  background: linear-gradient(90deg, #ffb963 0 6px, rgba(24,22,10,0.93) 0 100%);
+  border-left: 6px solid #ffb963;
   margin-bottom: 1.2em;
 }
 .ciencia-section {
-  background: rgba(255, 119, 29, 0.08);
-  border-left: 4px solid #ff771d;
+  background: linear-gradient(90deg, #ff771d 0 6px, rgba(26,18,10,0.93) 0 100%);
+  border-left: 6px solid #ff771d;
   margin-bottom: 1.2em;
 }
 .icon-text {
@@ -519,6 +519,7 @@ header::after, footer::before {
 .menu-cookie-popup {
   border: 2px solid;
   border-image: linear-gradient(135deg, #3d52f1, #d0eaff, #ffb963, #ff771d, #ff4926, #3d52f1) 1;
+  animation: borderFlow 3s linear infinite alternate;
 }
 .gradient-link {
   background: linear-gradient(135deg, #3d52f1, #d0eaff, #ffb963, #ff771d, #ff4926, #3d52f1);
@@ -533,4 +534,10 @@ header::after, footer::before {
 }
 .gradient-link:hover, .gradient-link:focus {
   filter: brightness(1.2) drop-shadow(0 2px 8px #3d52f1aa);
+}
+
+/* Cookie popup animated gradient border */
+@keyframes borderFlow {
+  0% { border-image-source: linear-gradient(135deg, #3d52f1, #d0eaff, #ffb963, #ff771d, #ff4926, #3d52f1); }
+  100% { border-image-source: linear-gradient(495deg, #3d52f1, #d0eaff, #ffb963, #ff771d, #ff4926, #3d52f1); }
 } 
