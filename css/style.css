@@ -107,9 +107,16 @@ nav {
   display: inline-block; /* Needed for transform */
 }
 
-.nav-links a:hover {
-  opacity: 0.9;
-  transform: translateY(-2px); /* Subtle lift */
+.nav-links a:hover, .nav-links a:focus {
+  background: -webkit-linear-gradient(135deg, #3d52f1 0%, #d0eaff 25%, #ffb963 50%, #ff771d 75%, #ff4926 100%);
+  background: linear-gradient(135deg, #3d52f1 0%, #d0eaff 25%, #ffb963 50%, #ff771d 75%, #ff4926 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  transition: text-shadow 0.3s, filter 0.3s;
+  filter: brightness(1.2) drop-shadow(0 2px 8px #3d52f1aa);
+  text-decoration: underline;
 }
 
 main {
@@ -326,4 +333,18 @@ footer p:hover {
   .about p {
       font-size: 1rem;
   }
+}
+
+.gradient-link {
+  background: -webkit-linear-gradient(135deg, #3d52f1 0%, #d0eaff 25%, #ffb963 50%, #ff771d 75%, #ff4926 100%);
+  background: linear-gradient(135deg, #3d52f1 0%, #d0eaff 25%, #ffb963 50%, #ff771d 75%, #ff4926 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  transition: text-shadow 0.3s, filter 0.3s;
+}
+.gradient-link:hover, .gradient-link:focus {
+  filter: brightness(1.2) drop-shadow(0 2px 8px #3d52f1aa);
+  text-decoration: underline;
 } 
