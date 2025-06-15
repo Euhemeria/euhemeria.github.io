@@ -481,7 +481,8 @@ header::after, footer::before {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 1.2em;
-    margin-bottom: 2em;
+    margin: 2em 5%;
+    max-width: 1200px;
 }
 
 .definicion-section {
@@ -501,11 +502,12 @@ header::after, footer::before {
 .ciencia-section {
     grid-column: 2;
     grid-row: 1 / span 2;
-    height: 100%;
+    height: min-content;
     display: flex;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.7);
     border-left: 4px solid var(--orange);
+    align-self: start;
 }
 
 .ciencia-section p {
@@ -537,6 +539,7 @@ header::after, footer::before {
     .science-cards-grid {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
+        margin: 1em 5%;
     }
     .definicion-section, .sabiasque-section, .ciencia-section {
         grid-column: 1;
