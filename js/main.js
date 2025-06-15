@@ -19,8 +19,40 @@ const nav = document.querySelector('nav');
 const mobileNavButton = document.createElement('button');
 mobileNavButton.classList.add('mobile-nav-toggle');
 mobileNavButton.innerHTML = '<i class="fas fa-bars"></i>';
+mobileNavButton.setAttribute('title', 'Abrir menú de navegación');
 mobileNavButton.addEventListener('click', toggleMobileNav);
 nav.appendChild(mobileNavButton);
+
+// --- Cookie popup logic for the hamburger icon ---
+mobileNavButton.addEventListener('contextmenu', e => e.preventDefault()); // prevent right-click menu
+mobileNavButton.addEventListener('click', function(e) {
+    // If nav already has a popup, remove it
+    const existing = nav.querySelector('.menu-cookie-popup');
+    if (existing) { existing.remove(); return; }
+    // Create popup
+    const popup = document.createElement('div');
+    popup.className = 'menu-cookie-popup';
+    popup.innerHTML = `
+      <button class="close-btn" title="Cerrar">&times;</button>
+      <div style="margin-bottom:0.7em; text-align:center;">Perdón, este botón no hace nada.<br>Ten una galleta :)</div>
+      <img src="img/cookie.png" alt="Galleta" />
+    `;
+    // Position below the button
+    nav.style.position = 'relative';
+    mobileNavButton.parentElement.appendChild(popup);
+    // Close logic
+    popup.querySelector('.close-btn').onclick = () => popup.remove();
+    // Optional: close on click outside
+    setTimeout(() => {
+      function outsideClick(event) {
+        if (!popup.contains(event.target) && event.target !== mobileNavButton) {
+          popup.remove();
+          document.removeEventListener('mousedown', outsideClick);
+        }
+      }
+      document.addEventListener('mousedown', outsideClick);
+    }, 0);
+});
 
 // Update copyright year automatically
 document.querySelector('footer p').innerHTML = 
