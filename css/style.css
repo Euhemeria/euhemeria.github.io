@@ -476,21 +476,43 @@ header::after, footer::before {
   filter: drop-shadow(0 2px 6px #0008);
 }
 
+.science-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.2em;
+  margin-bottom: 2em;
+}
 .definicion-section {
-  background: linear-gradient(90deg, #3d52f1 0 6px, rgba(24,28,42,0.93) 0 100%);
-  border-left: 6px solid #3d52f1;
-  margin-bottom: 1.2em;
+  grid-column: 1;
+  grid-row: 1;
 }
 .sabiasque-section {
-  background: linear-gradient(90deg, #ffb963 0 6px, rgba(24,22,10,0.93) 0 100%);
-  border-left: 6px solid #ffb963;
-  margin-bottom: 1.2em;
+  grid-column: 1;
+  grid-row: 2;
 }
 .ciencia-section {
-  background: linear-gradient(90deg, #ff771d 0 6px, rgba(26,18,10,0.93) 0 100%);
-  border-left: 6px solid #ff771d;
-  margin-bottom: 1.2em;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
 }
+@media (max-width: 900px) {
+  .science-cards-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  .definicion-section, .sabiasque-section, .ciencia-section {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .ciencia-section {
+    height: auto;
+  }
+}
+
 .icon-text {
   font-size: 1.3em;
   vertical-align: middle;
