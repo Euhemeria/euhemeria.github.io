@@ -67,47 +67,68 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectAndDisplayRandomPosts = () => {
         // Get current images in the DOM
         const currentImages = Array.from(displayItems).map(displayItem => displayItem.querySelector('img').getAttribute('src'));
-        // Exclude all currently displayed images (unless hovered) from the pool
-        const availableData = allGalleryItemsData.filter(item => !currentImages.includes(item.src) && !hoveredSrcs.has(item.src));
+        // Build the next set of images: lock hovered images in their slot
+        let nextImages = [];
+        let usedSrcs = new Set();
+        // First, lock hovered images in their current slot
+        displayItems.forEach((displayItem, index) => {
+            const img = displayItem.querySelector('img');
+            const src = img.getAttribute('src');
+            if (hoveredSrcs.has(src) && src) {
+                nextImages[index] = { src, alt: img.getAttribute('alt') };
+                usedSrcs.add(src);
+            } else {
+                nextImages[index] = null;
+            }
+        });
+        // Build pool of available images (not currently displayed or hovered or already used)
+        const availableData = allGalleryItemsData.filter(item => !currentImages.includes(item.src) && !hoveredSrcs.has(item.src) && !usedSrcs.has(item.src));
         // Shuffle the available data array
         const shuffledData = [...availableData].sort(() => 0.5 - Math.random());
-        // Select the first 3 unique items
-        let selectedItems = shuffledData.slice(0, 3);
-
-        // If not enough items, allow currently displayed images (but still not hovered) to fill the rest
-        if (selectedItems.length < 3) {
-            const missingCount = 3 - selectedItems.length;
-            const currentNonHovered = allGalleryItemsData.filter(item => currentImages.includes(item.src) && !hoveredSrcs.has(item.src)).sort(() => 0.5 - Math.random());
-            selectedItems = selectedItems.concat(currentNonHovered.slice(0, missingCount));
+        // Fill in the rest of the slots
+        let dataIndex = 0;
+        for (let i = 0; i < 3; i++) {
+            if (!nextImages[i]) {
+                if (dataIndex < shuffledData.length) {
+                    nextImages[i] = shuffledData[dataIndex++];
+                    usedSrcs.add(nextImages[i].src);
+                } else {
+                    // If not enough, fill from current non-hovered images not already used
+                    const fallback = allGalleryItemsData.find(item => currentImages.includes(item.src) && !hoveredSrcs.has(item.src) && !usedSrcs.has(item.src));
+                    if (fallback) {
+                        nextImages[i] = fallback;
+                        usedSrcs.add(fallback.src);
+                    } else {
+                        // If still not enough, fill with hovered images in their current slot
+                        const hoveredFill = currentImages.find(src => hoveredSrcs.has(src) && !usedSrcs.has(src));
+                        if (hoveredFill) {
+                            nextImages[i] = { src: hoveredFill, alt: '' };
+                            usedSrcs.add(hoveredFill);
+                        }
+                    }
+                }
+            }
         }
-
-        // If still not enough (e.g. user is hovering over 2+ images), fill with hovered images in their current slot
-        if (selectedItems.length < 3) {
-            const hoveredFill = currentImages.filter(src => hoveredSrcs.has(src) && !selectedItems.some(item => item && item.src === src));
-            selectedItems = selectedItems.concat(hoveredFill.slice(0, 3 - selectedItems.length).map(src => ({src, alt: ''})));
-        }
-
         // Play pop-out animation for images that will be replaced (not hovered)
         displayItems.forEach((item, index) => {
-            if (!hoveredSrcs.has(selectedItems[index].src)) {
-                const img = item.querySelector('img');
+            const img = item.querySelector('img');
+            if (!hoveredSrcs.has(img.getAttribute('src'))) {
                 img.classList.remove('pop-in');
                 img.classList.add('pop-out');
             }
         });
-
         // Wait for pop-out to complete (0.2s), then leave grid empty for 0.05s, then pop-in new image (total 0.25s delay)
         setTimeout(() => {
             displayItems.forEach((displayItem, index) => {
-                if (!hoveredSrcs.has(selectedItems[index].src)) {
-                    const img = displayItem.querySelector('img');
+                const img = displayItem.querySelector('img');
+                if (!hoveredSrcs.has(img.getAttribute('src'))) {
                     // Hide image for 0.05s
                     img.style.opacity = '0';
                     setTimeout(() => {
                         // Set new image src/alt
-                        if (selectedItems[index]) {
-                            img.setAttribute('src', selectedItems[index].src);
-                            img.setAttribute('alt', selectedItems[index].alt);
+                        if (nextImages[index]) {
+                            img.setAttribute('src', nextImages[index].src);
+                            img.setAttribute('alt', nextImages[index].alt);
                             img.classList.remove('pop-out');
                             img.classList.add('pop-in');
                             img.style.opacity = '';
