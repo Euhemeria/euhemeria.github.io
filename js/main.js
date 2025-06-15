@@ -48,11 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const displayItems = galleryContainer.querySelectorAll('.gallery-item.active-display');
 
-    // Track which images are being hovered
-    const hoveredIndexes = new Set();
+    // Track which images are being hovered (by src)
+    let hoveredSrcs = new Set();
     displayItems.forEach((displayItem, index) => {
-        displayItem.addEventListener('mouseenter', () => hoveredIndexes.add(index));
-        displayItem.addEventListener('mouseleave', () => hoveredIndexes.delete(index));
+        const img = displayItem.querySelector('img');
+        displayItem.addEventListener('mouseenter', () => {
+            if (img.getAttribute('src')) hoveredSrcs.add(img.getAttribute('src'));
+        });
+        displayItem.addEventListener('mouseleave', () => {
+            if (img.getAttribute('src')) hoveredSrcs.delete(img.getAttribute('src'));
+        });
     });
 
     // Store the last shown items
@@ -60,25 +65,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to select and display 3 random unique items with pop-in/pop-out animation
     const selectAndDisplayRandomPosts = () => {
-        // Exclude last shown items from the pool
-        const availableData = allGalleryItemsData.filter(item => !lastShownItems.includes(item.src));
+        // Exclude last shown items and hovered images from the pool
+        const availableData = allGalleryItemsData.filter(item => !lastShownItems.includes(item.src) && !hoveredSrcs.has(item.src));
         // Shuffle the available data array
         const shuffledData = [...availableData].sort(() => 0.5 - Math.random());
         // Select the first 3 unique items
         let selectedItems = shuffledData.slice(0, 3);
 
-        // If not enough items, allow previously shown items to fill the rest
+        // If not enough items, allow previously shown items (but still not hovered) to fill the rest
         if (selectedItems.length < 3) {
-            // Get the missing count
             const missingCount = 3 - selectedItems.length;
-            // Get the rest from lastShownItems (shuffle for randomness)
-            const lastShownData = allGalleryItemsData.filter(item => lastShownItems.includes(item.src)).sort(() => 0.5 - Math.random());
+            const lastShownData = allGalleryItemsData.filter(item => lastShownItems.includes(item.src) && !hoveredSrcs.has(item.src)).sort(() => 0.5 - Math.random());
             selectedItems = selectedItems.concat(lastShownData.slice(0, missingCount));
+        }
+
+        // If still not enough (e.g. user is hovering over 2+ images), fill with hovered images in their current slot
+        if (selectedItems.length < 3) {
+            const currentImages = Array.from(displayItems).map(displayItem => displayItem.querySelector('img').getAttribute('src'));
+            const hoveredFill = currentImages.filter(src => hoveredSrcs.has(src) && !selectedItems.some(item => item && item.src === src));
+            selectedItems = selectedItems.concat(hoveredFill.slice(0, 3 - selectedItems.length).map(src => ({src, alt: ''})));
         }
 
         // Play pop-out animation for images that will be replaced (not hovered)
         displayItems.forEach((item, index) => {
-            if (!hoveredIndexes.has(index)) {
+            if (!hoveredSrcs.has(selectedItems[index].src)) {
                 const img = item.querySelector('img');
                 img.classList.remove('pop-in');
                 img.classList.add('pop-out');
@@ -88,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Wait for pop-out to complete (0.2s), then leave grid empty for 0.05s, then pop-in new image (total 0.25s delay)
         setTimeout(() => {
             displayItems.forEach((displayItem, index) => {
-                if (!hoveredIndexes.has(index)) {
+                if (!hoveredSrcs.has(selectedItems[index].src)) {
                     const img = displayItem.querySelector('img');
                     // Hide image for 0.05s
                     img.style.opacity = '0';
