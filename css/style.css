@@ -95,10 +95,13 @@ nav {
   display: flex;
   align-items: center;
   gap: 0.5em;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-light);
 }
 
 .logo-img {
-  height: 1.5em;
+  height: 1.8em;
   width: auto;
   display: inline-block;
   vertical-align: middle;
