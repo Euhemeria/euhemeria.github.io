@@ -477,40 +477,71 @@ header::after, footer::before {
 }
 
 .science-cards-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1.2em;
-  margin-bottom: 2em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1.2em;
+    margin-bottom: 2em;
 }
+
 .definicion-section {
-  grid-column: 1;
-  grid-row: 1;
-}
-.sabiasque-section {
-  grid-column: 1;
-  grid-row: 2;
-}
-.ciencia-section {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-}
-@media (max-width: 900px) {
-  .science-cards-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-  }
-  .definicion-section, .sabiasque-section, .ciencia-section {
     grid-column: 1;
-    grid-row: auto;
-  }
-  .ciencia-section {
-    height: auto;
-  }
+    grid-row: 1;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-left: 4px solid var(--deep-blue);
+}
+
+.sabiasque-section {
+    grid-column: 1;
+    grid-row: 2;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-left: 4px solid var(--yellow);
+}
+
+.ciencia-section {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-left: 4px solid var(--orange);
+}
+
+.ciencia-section p {
+    margin-bottom: 1rem;
+}
+
+.ciencia-section p:last-child {
+    margin-bottom: 0;
+}
+
+.science-section {
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+}
+
+.science-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+}
+
+.science-section p {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 900px) {
+    .science-cards-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    .definicion-section, .sabiasque-section, .ciencia-section {
+        grid-column: 1;
+        grid-row: auto;
+    }
 }
 
 .icon-text {
