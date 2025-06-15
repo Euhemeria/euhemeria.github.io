@@ -241,14 +241,24 @@ section {
 
 .social-link {
   color: var(--text-light);
-  font-size: 1.8rem; /* Increased size */
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  display: inline-block; /* Needed for transform */
+  font-size: 1.8rem;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(.4,2,.6,1), filter 0.3s, color 0.3s;
+  display: inline-block;
 }
 
-.social-link:hover {
-  opacity: 0.9;
-  transform: scale(1.1); /* Subtle scale */
+.social-link:hover, .social-link:focus {
+  /* Glow */
+  filter: drop-shadow(0 0 12px #ffb963cc) brightness(1.2);
+  /* Enlarge and rotate */
+  transform: scale(2) rotate(20deg);
+  /* Gradient color on icon */
+  color: transparent;
+  background: linear-gradient(135deg, #3d52f1, #d0eaff, #ffb963, #ff771d, #ff4926, #3d52f1);
+  background-size: 200% 200%;
+  animation: gradient-wave 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 footer {
