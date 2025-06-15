@@ -92,9 +92,16 @@ nav {
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.logo-img {
+  height: 1.5em;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .nav-links {
