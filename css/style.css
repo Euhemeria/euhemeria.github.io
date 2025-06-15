@@ -479,10 +479,10 @@ header::after, footer::before {
 .science-cards-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: repeat(4, auto);
     gap: 1.2em;
-    margin: 2em 5%;
     max-width: 1200px;
+    margin: 2em auto;
 }
 
 .definicion-section {
@@ -496,17 +496,29 @@ header::after, footer::before {
     grid-column: 1;
     grid-row: 2;
     background-color: rgba(0, 0, 0, 0.7);
-    border-left: 4px solid var(--yellow);
+    border-left: 5px solid var(--orange);
+}
+
+.memes-section {
+    grid-column: 1 / span 2; /* Span both columns */
+    grid-row: 3; /* Placed in the new row */
+    background-color: black;
+    border-image: var(--brand-gradient) 1;
+    border-image-slice: 1;
+    animation: borderFlow 3s linear infinite alternate;
+    padding: 3rem 5%;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
 }
 
 .ciencia-section {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3; /* Spanning all 4 rows now */
     height: min-content;
     display: flex;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.7);
-    border-left: 4px solid var(--orange);
+    border-left: 5px solid var(--red);
     align-self: start;
 }
 
