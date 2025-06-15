@@ -26,7 +26,7 @@ nav.appendChild(mobileNavButton);
 document.querySelector('footer p').innerHTML = 
     `&copy; ${new Date().getFullYear()} Euhemeria. No tenemos derechos xd.`;
 
-// Gallery logic for random 3-image display with fade animation
+// Gallery logic for random 3-image display with pop-in/pop-out animation
 document.addEventListener('DOMContentLoaded', () => {
     const galleryContainer = document.querySelector('.post-gallery');
     if (!galleryContainer) return;
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Store the last shown items
     let lastShownItems = [];
 
-    // Function to select and display 3 random unique items with fade animation
+    // Function to select and display 3 random unique items with pop-in/pop-out animation
     const selectAndDisplayRandomPosts = () => {
         // Exclude last shown items from the pool
         const availableData = allGalleryItemsData.filter(item => !lastShownItems.includes(item.src));
@@ -76,37 +76,40 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedItems = selectedItems.concat(lastShownData.slice(0, missingCount));
         }
 
-        // Apply fade-out animation
+        // Play pop-out animation for images that will be replaced (not hovered)
         displayItems.forEach((item, index) => {
-            // Only animate if not hovered
             if (!hoveredIndexes.has(index)) {
                 const img = item.querySelector('img');
-                img.classList.remove('fade-in');
-                img.classList.add('fade-out');
+                img.classList.remove('pop-in');
+                img.classList.add('pop-out');
             }
         });
 
-        // Wait for fade-out to complete, then update content and fade in
+        // Wait for pop-out to complete (0.2s), then leave grid empty for 0.05s, then pop-in new image (total 0.25s delay)
         setTimeout(() => {
             displayItems.forEach((displayItem, index) => {
-                // Only update if not hovered
                 if (!hoveredIndexes.has(index)) {
                     const img = displayItem.querySelector('img');
-                    if (selectedItems[index]) {
-                        img.setAttribute('src', selectedItems[index].src);
-                        img.setAttribute('alt', selectedItems[index].alt);
-                        // Remove fade-out and add fade-in
-                        img.classList.remove('fade-out');
-                        img.classList.add('fade-in');
-                        displayItem.style.display = 'flex'; // Ensure display is correct
-                    } else {
-                        displayItem.style.display = 'none'; // Hide if less than 3 items
-                    }
+                    // Hide image for 0.05s
+                    img.style.opacity = '0';
+                    setTimeout(() => {
+                        // Set new image src/alt
+                        if (selectedItems[index]) {
+                            img.setAttribute('src', selectedItems[index].src);
+                            img.setAttribute('alt', selectedItems[index].alt);
+                            img.classList.remove('pop-out');
+                            img.classList.add('pop-in');
+                            img.style.opacity = '';
+                            displayItem.style.display = 'flex';
+                        } else {
+                            displayItem.style.display = 'none';
+                        }
+                    }, 50); // 0.05s empty
                 }
             });
             // Update lastShownItems for the next cycle (use current images in DOM)
             lastShownItems = Array.from(displayItems).map(displayItem => displayItem.querySelector('img').getAttribute('src'));
-        }, 500); // Matches fade-out animation duration (0.5s)
+        }, 200); // 0.2s pop-out
     };
 
     // Initial display
